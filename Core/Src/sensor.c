@@ -34,9 +34,6 @@ uint8_t rxDeltaY_H;
 uint16_t fullDeltaX;
 uint16_t fullDeltaY;
 
-uint16_t fullDeltaXScaled;
-uint16_t fullDeltaYScaled;
-
 bool txComplete = 0;
 bool rxComplete = 0;
 
@@ -275,14 +272,12 @@ void readSensorDeltaX() {
   sensorRead(&txDeltaX_L, &rxDeltaX_L);
   sensorRead(&txDeltaX_H, &rxDeltaX_H);
   fullDeltaX = (int16_t)((rxDeltaX_L << 8) | rxDeltaX_H);
-  fullDeltaXScaled = fullDeltaX / 256;
 }
 
 void readSensorDeltaY() {
   sensorRead(&txDeltaY_L, &rxDeltaY_L);
   sensorRead(&txDeltaY_H, &rxDeltaY_H);
   fullDeltaY = (int16_t)((rxDeltaY_L << 8) | rxDeltaY_H);
-  fullDeltaYScaled = fullDeltaY / 256;
 
 }
 
@@ -293,5 +288,5 @@ void processSensor() {
     readSensorDeltaY();
 }
 
-uint8_t getSensorDeltaX() { return fullDeltaXScaled; }
-uint8_t getSensorDeltaY() { return fullDeltaYScaled; }
+uint8_t getSensorDeltaX() { return fullDeltaX / 256; }
+uint8_t getSensorDeltaY() { return fullDeltaY / 256; }

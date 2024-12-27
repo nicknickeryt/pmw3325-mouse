@@ -60,9 +60,7 @@ static void MX_SPI1_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-#define HID_REPORT_INTERVAL 1
-
-uint32_t lastHIDReportTime = 0;
+#define POLLING_MS 1
 
 uint8_t rxDummy = 0x03;
 
@@ -88,10 +86,8 @@ void processEncoder() {
   scrollDirRaw = Pin_process(ENCA, ENCB);
   if (scrollDirRaw == DIR_NONE)
     scrollDir = 0x00;
-  else {
+  else 
     scrollDir = scrollDirRaw == DIR_CW ? 0x01 : 0xFF;
-    HAL_Delay(3);                                       // DELETE THIS 
-  }
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
@@ -123,30 +119,22 @@ void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi) { sensorRxCallback(); }
 
 uint32_t lastReportTime = 0;
 
-// Funkcja wykonywana w pętli głównej
 void processMouse() {
-    // Sprawdzenie, czy minęło 1 ms od ostatniego raportu
-    if ((HAL_GetTick() - lastReportTime) >= 5) {
-        lastReportTime = HAL_GetTick(); // Aktualizacja czasu ostatniego raportu
+    if ((HAL_GetTick() - lastReportTime) >= POLLING_MS) {
+        lastReportTime = HAL_GetTick();
 
-        // Obsługa czujników
         processSensor();
-
-        // Obsługa enkodera
         processEncoder();
 
-        // Przygotowanie bufora HID
         HID_Buffer[0] = 0;
         HID_Buffer[0] = (buttonLeftPressed << 0) | 
                         (buttonRightPressed << 1) |
                         (buttonCenterPressed << 2);
 
-        // Pobieranie wartości deltaX, deltaY i scrollDir
         HID_Buffer[1] = getSensorDeltaX();
         HID_Buffer[2] = getSensorDeltaY();
         HID_Buffer[3] = scrollDir;
 
-        // Wysłanie raportu HID
         USBD_HID_SendReport(&hUsbDeviceFS, HID_Buffer, 4);
     }
 }
@@ -158,6 +146,7 @@ void processMouse() {
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -196,10 +185,9 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     }
-    /* USER CODE END 3 */
-  }
-  
-  
+  /* USER CODE END 3 */
+}
+
 /**
   * @brief System Clock Configuration
   * @retval None
