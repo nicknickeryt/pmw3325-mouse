@@ -49,6 +49,8 @@ target_sources(stm32cubemx INTERFACE
     /home/nick/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_exti.c
     /home/nick/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_spi.c
     /home/nick/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_spi_ex.c
+    /home/nick/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_tim.c
+    /home/nick/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_tim_ex.c
     ../../Core/Src/system_stm32f0xx.c
     /home/nick/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c
     /home/nick/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.5/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c

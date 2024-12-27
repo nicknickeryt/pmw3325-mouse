@@ -49,6 +49,8 @@ extern SPI_HandleTypeDef hspi1;
 
 /* USER CODE END EM */
 
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
+
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
@@ -60,6 +62,12 @@ void Error_Handler(void);
 #define ENCB_Pin GPIO_PIN_0
 #define ENCB_GPIO_Port GPIOA
 #define ENCB_EXTI_IRQn EXTI0_1_IRQn
+#define BLUE_Pin GPIO_PIN_1
+#define BLUE_GPIO_Port GPIOA
+#define RED_Pin GPIO_PIN_2
+#define RED_GPIO_Port GPIOA
+#define GREEN_Pin GPIO_PIN_3
+#define GREEN_GPIO_Port GPIOA
 #define ENCA_Pin GPIO_PIN_15
 #define ENCA_GPIO_Port GPIOA
 #define ENCA_EXTI_IRQn EXTI4_15_IRQn
