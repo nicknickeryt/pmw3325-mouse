@@ -18,8 +18,6 @@
 void sensorTxCallback();
 void sensorRxCallback();
 
-void sensorChipSelect();
-void sensorChipDeselect();
 void sensorRead(uint8_t* txBuffer, uint8_t* rxBuffer);
 void sensorWrite(uint8_t* reg, uint8_t* data);
 

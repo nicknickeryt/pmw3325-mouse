@@ -1,4 +1,3 @@
-
 #include "sensor.h"
 #include "main.h"
 
@@ -34,60 +33,38 @@ uint8_t rxDeltaY_H;
 uint16_t fullDeltaX;
 uint16_t fullDeltaY;
 
-bool txComplete = 0;
-bool rxComplete = 0;
+// The volatile thing is important so as not to optimize while() loops
+volatile bool txComplete = 0;
+volatile bool rxComplete = 0;
 
 void sensorTxCallback() { txComplete = 1; }
 
 void sensorRxCallback() { rxComplete = 1; }
 
-void sensorChipSelect() {
-  // HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 0);
-}
-
-void sensorChipDeselect() {
-  // HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 1);
-}
-
 void sensorRead(uint8_t *txBuffer, uint8_t *rxBuffer) {
-  sensorChipSelect();
-
   txComplete = 0;
   HAL_SPI_Transmit_IT(&hspi1, txBuffer, 1);
-  while (!txComplete) {
-  }
+  while (!txComplete) {}
 
   rxComplete = 0;
   HAL_SPI_Receive_IT(&hspi1, rxBuffer, 1);
-  while (!rxComplete) {
-  }
-
-  sensorChipDeselect();
+  while (!rxComplete) {}
 }
 
 void sensorWrite(uint8_t *reg, uint8_t *data) {
   uint8_t reg_addr = *reg | 0x80;
-  sensorChipSelect();
 
   txComplete = 0;
   HAL_SPI_Transmit_IT(&hspi1, &reg_addr, 1);
-  while (!txComplete) {
-  }
+  while (!txComplete) {}
 
   txComplete = 0;
   HAL_SPI_Transmit_IT(&hspi1, data, 1);
-  while (!txComplete) {
-  }
-
-  sensorChipDeselect();
+  while (!txComplete) {}
 }
 
 void powerUpSensor() {
   HAL_Delay(50);
-
-  sensorChipDeselect();
-  sensorChipSelect();
-  sensorChipDeselect();
 
   uint8_t reg, data, testRead;
 

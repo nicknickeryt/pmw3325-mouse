@@ -237,7 +237,7 @@ void processVibra() {
   uint8_t value = (getVibraPWM(signedX, signedY) * 0.7);
   uint32_t currentTime = HAL_GetTick();
 
-  if (buttonLeftPressed || buttonRightPressed || buttonCenterPressed || scrollDir != 0) {
+  if (buttonLeftPressed || buttonRightPressed || buttonCenterPressed || buttonCPIPressed || scrollDir != 0) {
     if (!buttonPressed) {
       buttonPressed = 1;
       buttonPressStartTime = currentTime;
@@ -249,8 +249,8 @@ void processVibra() {
       scrollVibraActive = 1;
     }
 
-    if (shouldVibrateButton && (currentTime - buttonPressStartTime) < 40) {
-      value = 60;
+    if (shouldVibrateButton && (currentTime - buttonPressStartTime) < 60) {
+      value = 50;
     } else {
       shouldVibrateButton = 0;
     }
